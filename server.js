@@ -37,7 +37,7 @@ app.post("/signup", async (req,res)=>{
     }
 })
 
- app.login("/login", async (req,res)=>{
+ app.post("/login", async (req,res)=>{
     const {email,password}= req.body;
     try{
        const found_user = await userData.findOne({email})
