@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userData = require('./model')
 const bcrypt = require('bcrypt')
+const dns=require('dns');
+dns.setServers(['8.8.8.8','8.8.4.4']);
 const app = express();
 app.use(express.json())
-mongoose.connect("mongodb+srv://loginsa80_db_user:JahDfkUyWSRqIjTs@cluster0.oo49k08.mongodb.net/")
+mongoose.connect("mongodb+srv://mounikaravivinjamuri_db_user:h6MMbFhzdAU54vYn@cluster0.zry2akr.mongodb.net")
 .then(()=> console.log("database connected"))         
 .catch((err)=>console.log(err.message))
 
@@ -34,6 +36,35 @@ app.post("/signup", async (req,res)=>{
         console.log(err.message)
     }
 })
+
+ app.login("/login", async (req,res)=>{
+    const {email,password}= req.body;
+    try{
+       const found_user = await userData.findOne({email})
+       if(!found_user){
+         return res.json({message:"user not found"})
+       }
+       const ismatch=await bcrypt.compare(password,found_user.password)//(paintext,database hashed password)
+       if(!ismatch){
+        return res.json({err:"invalid password"})
+       }
+       return res.json({message:"user login",
+                        username:found_user.username
+       })
+      }
+       catch(err){
+       console.log(err.message)
+       }
+      })
+
+
+
+
+
+
+
+
+
 
 
 app.listen(3000, ()=> console.log("server is runnning.."))
