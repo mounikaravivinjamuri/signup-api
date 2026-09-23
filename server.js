@@ -6,7 +6,7 @@ const dns=require('dns');
 dns.setServers(['8.8.8.8','8.8.4.4']);
 const app = express();
 app.use(express.json())
-mongoose.connect("mongodb+srv://mounikaravivinjamuri_db_user:h6MMbFhzdAU54vYn@cluster0.zry2akr.mongodb.net")
+mongoose.connect("")
 .then(()=> console.log("database connected"))         
 .catch((err)=>console.log(err.message))
 
